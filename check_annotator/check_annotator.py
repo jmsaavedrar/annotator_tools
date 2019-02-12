@@ -43,6 +43,8 @@ class App:
         for files in types:
             files_grabbed.extend(glob.glob(files))
         img_files = files_grabbed
+        if not os.path.exists(path_output):
+            with open(path_output, 'w'): pass
         with open(path_output, 'r') as file: 
             images_ready = [line.split('\t')[0] for line in file] 
         images_ready = [f.split('.')[0] for f in images_ready]
@@ -86,7 +88,7 @@ class App:
         elif self.current_filename == '':
             print_msg('Error: Cargue imagen primero')
             return
-        with open(self.path_output, 'a') as f: 
+        with open(self.path_output, 'a+') as f: 
             f.write("%s\t%s\n" % (self.current_filename, annotation))
         self.faltantes.pop(app.counter)
         if app.counter >= len(app.faltantes):
@@ -114,10 +116,10 @@ def get_img(path_img):
     return image    
 
 
-WIDTH_APP = 700 # ancho app
-HEIGHT_APP = 400 # alto app
-WIDTH_CANVAS = 600 # ancho canvas
-HEIGHT_CANVAS = 200 # alto canvas
+WIDTH_APP = 900 # ancho app
+HEIGHT_APP = 600 # alto app
+WIDTH_CANVAS = 800 # ancho canvas
+HEIGHT_CANVAS = 400 # alto canvas
 
 path_images0 = 'C:\\Users\\Core i7\\Desktop\\deep learning\\programas\\codigos\\YOLO-data\\\images'
 path_output0 = 'C:\\Users\\Core i7\\Desktop\\deep learning\\programas\\codigos\\YOLO-data\\annotations.txt'
@@ -164,4 +166,3 @@ botton_save = tk.Button(root, text='Guardar', font = "bold 16", command=app.gene
 botton_save.grid(row=5, column=1, columnspan=3, sticky='nsew', pady=10)
 
 root.mainloop()
-
